@@ -29,16 +29,15 @@ function Search() {
             return;
         }
 
-        const fetchApi = async () => {
-            setLoading(true);
-
-            const result = await searchServices.search(debouncedValue);
-
-            setSearchResult(result);
+    fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debouncedValue)}&type=less`)
+        .then((res) => res.json())
+        .then((res) => {
+            setSearchResult(res.data);
             setLoading(false);
-        };
-
-        fetchApi();
+        })
+        .catch(() => {
+            setLoading(false);
+        });
     }, [debouncedValue]);
 
     const handleClear = () => {
